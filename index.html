@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>
+    Apple Pay Web Stripe Demo
+  </title>
+  <meta name="viewport" content="user-scalable=no,initial-scale = 1.0,maximum-scale = 1.0">
+  <link rel="stylesheet" type="text/css" href="css/bootstripe.css">
+  <link rel="shortcut icon" href="https://dashboard.stripe.com/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="http://cloud.typography.com/711858/679104/css/fonts.css">
+  <link rel="stylesheet" type="text/css" href="fonts/magic-fonts.css">
+  <style type="text/css">
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    #apple-pay-button {
+      display: block;
+      background-color: black;
+      background-image: -webkit-named-image(apple-pay-logo-white);
+      background-size: 100% 100%;
+      background-origin: content-box;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 44px;
+      padding: 10px 0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="bs-InteractionMode--keyboard">
+<div class="bs-BIM">
+
+  <div class="bs-PageHeading bs-PageHeading--separated bs-u-marginless">
+    <div class="bs-PageHeading-copy">
+      <h2>
+        Apple Pay on the Web Stripe Demo
+      </h2>
+    </div>
+  </div>
+
+  <div class="bs-FieldsetGroup bs-FieldsetGroup--invert">
+
+    <fieldset class="bs-Fieldset">
+      <legend class="bs-Fieldset-legend">
+        <h3>
+          Personal Details
+        </h3>
+      </legend>
+      <div class="bs-Fieldset-rows">
+        <div class="bs-Fieldset-row">
+          <label class="bs-Fieldset-label">
+            Card holder name
+          </label>
+          <div class="bs-Fieldset-fields">
+            <div class="bs-TextInputGroup bs-TextInputGroup--horizontal">
+              <input type="text" name="legal_entity.first_name" placeholder="First" class="bs-TextInput">
+              <input type="text" name="legal_entity.last_name" placeholder="Last" class="bs-TextInput">
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="bs-Fieldset">
+      <legend class="bs-Fieldset-legend">
+        <h3>
+          Address Information
+        </h3>
+      </legend>
+      <div class="bs-Fieldset-rows">
+        <div class="bs-Fieldset-row">
+          <label class="bs-Fieldset-label">
+            Billing Address
+          </label>
+          <div class="bs-Fieldset-fields bs-Fieldset-fields--column">
+            <div class="bs-Fieldset-field">
+              <div class="bs-TextInputGroup bs-TextInputGroup--horizontal bs-u-fill">
+                <input type="text" name="legal_entity.address.line1" placeholder="Street" class="bs-TextInput">
+                <input type="text" name="legal_entity.address.postal_code" placeholder="ZIP" class="bs-TextInput--zip bs-TextInput">
+              </div>
+            </div>
+            <div class="bs-Fieldset-field">
+              <input type="text" name="legal_entity.address.city" placeholder="City" class="bs-TextInput">
+              <div class="bs-Select">
+                <select name="legal_entity.address.state">
+                  <option value="&ndash;&ndash;" disabled></option>
+                  <option value="AK">AK</option>
+                  <option value="AL">AL</option>
+                  <option value="AR">AR</option>
+                  <option value="AZ">AZ</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DC">DC</option>
+                  <option value="DE">DE</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="IA">IA</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="MA">MA</option>
+                  <option value="MD">MD</option>
+                  <option value="ME">ME</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MO">MO</option>
+                  <option value="MS">MS</option>
+                  <option value="MT">MT</option>
+                  <option value="NC">NC</option>
+                  <option value="ND">ND</option>
+                  <option value="NE">NE</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NV">NV</option>
+                  <option value="NY">NY</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="PR">PR</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VA">VA</option>
+                  <option value="VT">VT</option>
+                  <option value="WA">WA</option>
+                  <option value="WI">WI</option>
+                  <option value="WV">WV</option>
+                  <option value="WY">WY</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="bs-Fieldset">
+      <button id="apple-pay-button"></button>
+    </fieldset>
+</div>
+</div>
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script>
+  Stripe.setPublishableKey('pk_test_IR0lZ3Ot5IQnsde6xuAmkHvB');
+
+  Stripe.applePay.checkAvailability(function(available) {
+    if (available) {
+      document.getElementById('apple-pay-button').style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>
