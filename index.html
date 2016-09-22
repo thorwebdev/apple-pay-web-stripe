@@ -155,6 +155,34 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script>
+  function beginApplePay() {
+    var paymentRequest = {
+      countryCode: 'US',
+      currencyCode: 'USD',
+      total: {
+        label: 'schaeffonline.de',
+        amount: '19.99'
+      }
+    };
+    var session = Stripe.applePay.buildSession(paymentRequest,
+      function(result, completion) {
+
+        $.post('/charges', { token: result.token.id }).done(function() {
+          completion(ApplePaySession.STATUS_SUCCESS);
+          // You can now redirect the user to a receipt page, etc.
+          window.location.href = '/success.html';
+        }).fail(function() {
+          completion(ApplePaySession.STATUS_FAILURE);
+        });
+
+    }, function(error) {
+      console.log(error.message);
+    });
+
+    session.begin();
+  }
+
+  // Start
   Stripe.setPublishableKey('pk_test_IR0lZ3Ot5IQnsde6xuAmkHvB');
 
   Stripe.applePay.checkAvailability(function(available) {
@@ -162,6 +190,8 @@
       document.getElementById('apple-pay-button').style.display = 'block';
     }
   });
+
+  document.getElementById('apple-pay-button').addEventListener('click', beginApplePay);
 </script>
 </body>
 </html>
