@@ -105,7 +105,7 @@
         label: 'schaeffonline.de',
         amount: '19.99'
       },
-      requiredBillingContactFields: ['postalAddress','name'],
+      requiredBillingContactFields: ['postalAddress'],
       requiredShippingContactFields: ['phone','email','name']
     };
     var session = Stripe.applePay.buildSession(paymentRequest,
